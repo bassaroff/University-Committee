@@ -1,0 +1,377 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@{
+    Layout = String.Empty;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - приложение ASP.NET</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
+    <script src="https://kit.fontawesome.com/7a19382369.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=put_your_api_key_here&callback=myMap"></script>
+
+    @Styles.Render("~/Content/Site.css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="header-top bg-dark">
+        <nav class="navbar sticky-top">
+            <div class="container justify-content-between">
+                <div class="row w-100 justify-content-between text-light">
+
+                    <div class="col-sm-6 col-md-4 col-lg-3 my-2 d-flex justify-content-center">
+                        <i class="fas fa-phone-alt my-auto mr-2 white"></i>
+                        <h6 class="my-auto white">+7 (777) 777 77 77</h6>
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-lg-3 my-2 d-flex p-2 justify-content-center">
+                        <i class="fas fa-clock my-auto mr-2 white"></i>
+                        <h6 class="my-auto white">8:00 AM - 6:00 PM</h6>
+                    </div>
+
+                    <div class="social-link col-sm-12 col-md-4 col-lg-3 offset-lg-3 d-flex justify-content-between align-items-center">
+                        <a class="navbar-brand" href="https://www.facebook.com/iitukz/">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="navbar-brand" href="https://www.instagram.com/iitu_kz/?hl=ru">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a class="navbar-brand" href="https://vk.com/iitukz">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                        <a class="navbar-brand" href="https://twitter.com/iitukz">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="header-bottom">
+        <div class="hb-inner">
+            <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow bg-white rounded">
+                <div class="container justify-content-between">
+                    <div class="row w-100">
+                        <div class="col-sm-1">
+                            <a href="@Url.Action("Index", "Home")" title="List View" class="links">
+                                <img src="@Url.Content("~/Content/Images/iitu_logo_header.png")" width="200" height="auto" alt="" loading="lazy">
+                            </a>
+                        </div>
+                        <!--
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#publications" aria-controls="publications" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button> -->
+                        <div class="col-sm-8 offset-3 d-flex">
+                            <div class="collapse navbar-collapse">
+                                <ul class="navbar-nav">
+                                    <li class="link nav-item my-auto ml-auto">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
+                                    <li class="link nav-item my-auto">@Html.ActionLink("Admission", "Admission", "Home", null, new { @class = "nav-link" })</li>
+                                    <li class="link nav-item my-auto">@Html.ActionLink("News", "News", "Home", null, new { @class = "nav-link" })</li>
+                                    <li class="link nav-item my-auto">@Html.ActionLink("Innovation", "Innovation", "Home", null, new { @class = "nav-link" })</li>
+                                    @Html.Partial("_LoginPartial")
+                                </ul>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="back-video">
+        <div class="overlay"></div>
+        <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+            <source src='@Url.Content("~/Content/Videos/video.mp4")' type="video/mp4">
+        </video>
+        <div class="container h-100">
+            <div class="d-flex h-100 text-left align-items-center ">
+                <div class="w-100 text-white">
+                    <h1 class="header-title display-3">INTERNATIONAL</h1>
+                    <h1 class="header-title display-4">UNIVERSITY</h1>
+                    <p class="lead mb-0"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row my-4">
+            <div class="col-lg-6">
+                <div class="edu-years">
+                    <div class="edu-years-filter nav" id="nav-tab" role="tablist">
+                        <a class="active show" data-toggle="tab" href="#2009"><span>2009</span></a>
+                        <a data-toggle="tab" href="#2011" class="show"><span>2011</span></a>
+                        <a data-toggle="tab" href="#2013" class="show"><span>2013</span></a>
+                        <a data-toggle="tab" href="#2015" class="show"><span>2015</span></a>
+                    </div>
+
+                    <div class="edu-years-content tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade active show" id="2009" role="tabpanel">
+                            <ul class="px-0 my-3">
+                                <li>IITU was established on April 2, 2009 on behalf of the First President of the Republic of Kazakhstan - Nursultan Abishevich Nazarbayev.</li>
+                                <li>On May 29, 2009, the Ministry of Education and Science of the Republic of Kazakhstan issued a state license for educational activities to the University.</li>
+                                <li>Cisco Laboratory - in Almaty in summer 2009, the university signed a memorandum of understanding and cooperation in the field of information and communication technologies with Cisco. This was done as part of the active development of cooperation with the largest IT companies in order to provide the students of the International University of Information Technologies with the best opportunities for obtaining high-quality specialized education.</li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade show" id="2011" role="tabpanel">
+                            <ul class="px-0 my-3">
+                                <li>Cloud Computing of Innogrid - On August 9, 2011, a laboratory of open systems and cloud computing was established in close cooperation with the Chinese company Huawei, the Zerde infocommunication holding and the International University of Information Technology.</li>
+                                <li>The Apple Training Center is an official Apple certified laboratory that develops mobile applications for the IOS operating system. The laboratory was opened in 2011 at the International University of Information Technology. The laboratory belongs to the Department of Information Systems.</li>
+                                <li>Also in 2011, there were such significant events in the history of the university as a Memorandum with JSC NIT on July 16, 2011 on mutual understanding with Universiti Kuala Lumpur, Malaysia and a Memorandum with Graduate IT Systems Management School, Riga on September 15, 2011 on mutual understanding with Riga Technical University Riga. Latvia</li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade show" id="2013" role="tabpanel">
+                            <ul class="px-0 my-3">
+                                <li>On May 8, 2013, the University received scientific and scientific and technical accreditation from the Ministry of Education and Science of the Republic of Kazakhstan and on July 4, 2018 passed the re-accreditation procedure.</li>
+                                <li>June 25, 2013 A ceremonial presentation of diplomas to the first graduates of the International University of Information Technologies took place in Almaty. Deputy Akim of Almaty Zauresh Amanzholova, Vice President of iCarnegie Michael Bridzhez, Ambassador of Malaysia to Kazakhstan Dato Ahmad Razidi Bin Hazizi took part in the award ceremony.</li>
+                                <li>The 3D graphics and animation laboratory was opened at the International University of Information Technologies in 2013. Despite this, the laboratory managed to create several high-quality products for the Kazakhstan market. The main focus of the laboratory is 3D Mapping Show, as well as the creation of video presentations and various 3D projects.</li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade show" id="2015" role="tabpanel">
+                            <ul class="px-0 my-3">
+                                <li>In 2015, IITU students took first place in 1/4 of the world championship in sports programming ACM ICPC 2015. This victory allowed the team to reach the semifinals of the world championship in sports programming ACM ICPC 2015-2016, which was held on December 6 in Tashkent.</li>
+                                <li>Also, IITU students took first place in the final of the international technology competition Imagine Cup in the Game development category. The competition was held in three nominations: socially significant projects (World Citizenship), innovative applications (Innovation) and games (Games).</li>
+                                <li>On December 11, 2015, a collective amateur radio station with the call sign UN9GWA was opened at IITU. The MUIT collective radio station is equipped with modern radio equipment from ICOM and BARRETT firms, and efficient antennas. The IUIT radio station is the first and only collective radio station among the universities of Kazakhstan at the moment.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="edu-right-thumb">
+                    <img class="img-fluid h-auto" src='@Url.Content("~/Content/Images/amazon.jpg")' style="width:auto; height: 500px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid bg-danger">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 p-0 pl-md-3 py-4">
+                    <div class="">
+                        <div class="">
+                            <h2>Have any questions? We are ready to help!</h2>
+                            <button type="button" class="btn btn-lg btn-dark" data-toggle="modal" data-target="#subscribe">
+                                Contact us<i class="fas fa-angle-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="subscribe" tabindex="-1" aria-labelledby="SubscribeLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="SubscribeLabel">Subscribe on News</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <p style="margin:0" id="errorMess">Fill all fields</p>
+                                </div>
+                                <form id="formMail">
+
+                                    <div class="form-group">
+                                        <label>Email : </label>
+                                        <input type="email" name="email" id="email" class="form-control" placeholder="Enter email..." required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Name : </label>
+                                        <input type="text" name="name" id="name" class="form-control" placeholder="Enter name..." required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Phone : </label>
+                                        <input type="phone" name="phone" id="phone" class="form-control" placeholder="Enter phone..." required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Your question : </label>
+                                        <input type="text-area" name="info" id="info" class="form-control" placeholder="Put some info..." required>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                        <button type="button" id="sendMail" class="btn btn-dark">SUBSCRIBE</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6 py-4">
+                    <div class="row justify-content-around text-center">
+                        <div>
+                            <i class="fas fa-user-graduate fa-4x pb-4"></i>
+                            <h5>5000+ Students</h5>
+                        </div>
+                        <div>
+                            <i class="fas fa-book-open fa-4x pb-4"></i>
+                            <h5>20+ Directions</h5>
+                        </div>
+                        <div>
+                            <i class="fas fa-user-tie fa-4x pb-4"></i>
+                            <h5>100+ Teachers</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row my-5">
+            <a href="/" class="feature col-lg-4 col-md-6">
+                <i class="fas fa-code-branch fa-4x my-4"></i>
+                <h4><b>6 specialties, 4 directions</b></h4>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod recusandae sint eligendi, aliquam in labore exercitationem quas? Reprehenderit ipsa sit, iusto quo ut placeat voluptate?</p>
+            </a>
+            <a href="/" class="feature col-lg-4 col-md-6">
+                <i class="fas fa-laptop-code fa-4x my-4"></i>
+                <h4><b>Modern computers</b></h4>
+                <p>Computers have become an important part of our everyday life. We use computers every day, though not everyone realizes it. Even smartphones that are hidden in our bags and pockets are actually small computers.</p>
+            </a>
+            <a href="/" class="feature col-lg-4 col-md-6">
+                <i class="fas fa-chalkboard-teacher fa-4x my-4"></i>
+                <h4><b>Foreign teachers</b></h4>
+                <p>Teaching English online is rapidly growing in popularity. Allowing you to teach students all over the world from the comfort of your home. However, it can often be challenging to keep students motivated.</p>
+            </a>
+        </div>
+    </div>
+    <footer class="bg-dark">
+        <nav class="navbar navbar-expand-sm footer white text-light">
+            <div class="container">
+                <div class="row w-100 pt-5">
+
+
+                    <div class="col-xl-5 ">
+                        <div class="col-sm-12 text-left">
+                            <h3 class="red">INTERNATIONAL</h3>
+                            <h3 class="red">UNIVERSITY</h3>
+
+                            <p>Expound the actual teachings of the great explorer of the truth master human happiness one rejects dislikes avoids pleasure</p>
+
+                        </div>
+
+                        <div class="col-sm-6 social-link d-flex justify-content-between">
+                            <a class="navbar-brand" href="https://www.facebook.com/iitukz/">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a class="navbar-brand" href="https://www.instagram.com/iitu_kz/?hl=ru">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a class="navbar-brand" href="https://vk.com/iitukz">
+                                <i class="fab fa-vk"></i>
+                            </a>
+                            <a class="navbar-brand" href="https://twitter.com/iitukz">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-2 mb-5 ">
+                        <h4>Important Links</h4>
+                        <nav>
+                            <li class="nav-link"><a href="" class="white-link"><i class="fas fa-angle-right mr-2"></i>Home</a></li>
+                            <li class="nav-link"><a href="" class="white-link"><i class="fas fa-angle-right mr-2"></i>Specialties</a></li>
+                            <li class="nav-link"><a href="" class="white-link"><i class="fas fa-angle-right mr-2"></i>Dates</a></li>
+                            <li class="nav-link"><a href="" class="white-link"><i class="fas fa-angle-right mr-2"></i>Innovation</a></li>
+                        </nav>
+                    </div>
+
+                    <div class="col-xl-5">
+                        <div id="map" class="w-100" style="height:70%"></div>
+                        <div class="row col-sm-12 mt-4 justify-content-between">
+                            <div class="col-sm-6 d-flex justify-content-center my-2">
+                                <div class="row">
+                                    <i class="fas fa-phone-alt my-auto mr-2"></i>
+                                    <div class="ml-3">
+                                        <div class="row">
+                                            <h6 class="my-auto">+7 (777) 777 77 77</h6>
+                                        </div>
+                                        <div class="row">
+                                            <h6 class="my-auto">+7 (777) 666 66 66</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 d-flex justify-content-center my-2">
+                                <div class="row">
+                                    <i class="fas fa-map-marker-alt my-auto mr-2"></i>
+                                    <div class="ml-3">
+                                        <div class="row">
+                                            <h6 class="my-auto">Almaty, Kazakhstan</h6>
+                                        </div>
+                                        <div class="row">
+                                            <h6 class="my-auto">Manas St 34/1</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+
+    </footer>
+
+    <script>
+        function initMap() {
+            var uluru = { lat: 43.2349457, lng: 76.909527 };
+            var map = new google.maps.Map(
+                document.getElementById('map'), { zoom: 10, center: uluru });
+            var marker = new google.maps.Marker({ position: uluru, map: map });
+        };
+
+        $(window).on('scroll', function () {
+            console.log("hello");
+            var scroll = $(window).scrollTop(),
+                hbHeight = $('.header-top').innerHeight(),
+                headerBottom = $('.header-bottom');
+
+            if (scroll >= hbHeight) {
+                headerBottom.addClass("sticky-header");
+            } else {
+                headerBottom.removeClass("sticky-header");
+            }
+        });
+        $(window).on('scroll', function () {
+            var scroll = $(window).scrollTop(),
+                hbHeight = $('.header-top').innerHeight(),
+                mobileMenu = $('.mobile-menu');
+
+            if (scroll >= hbHeight) {
+                mobileMenu.addClass("sticky-header");
+            } else {
+                mobileMenu.removeClass("sticky-header");
+            }
+        });
+
+
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKRJyaWMT-jvx36xRhFvMB_RaBl7uyIJQ&callback=initMap">
+    </script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/snowfall.js")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>

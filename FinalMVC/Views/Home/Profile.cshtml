@@ -1,0 +1,444 @@
+﻿@model FinalMVC.Models.ProfileViewModel
+
+@using FinalMVC.Models
+@{
+    ViewBag.Title = "Profile";
+    var current = (ApplicationUser)Session["currentUser"];
+}
+
+<div class="row">
+    <div class="col-3 shadow bg-white rounded p-4">
+        <div class="d-flex justify-content-center">
+            <img src="@Url.Content(Model.user.PictureUrl)" class="rounded-circle " width="200px" alt="User avatar">
+
+        </div>
+        
+        <div class="mt-4 text-center">
+            <h3>@Model.user.UserName</h3>
+            <h4 style="color:gray">@Model.user.role</h4>
+        </div>
+        <hr />
+        <div class="mt-4">
+            <h5 class="mb-4">Subjects:</h5>
+            <div class="row text-center tags">
+                @for (int i = 0; i < Model.user.Subjects.Count(); i++)
+                {
+                <div class="col-6">
+                    @if (Model.user.Subjects[i].Checked)
+                    {
+                        <p class="tag">@Model.user.Subjects[i].Name</p>
+                    }
+
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-8 offset-1 shadow bg-white rounded p-4">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active red" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+            </li>
+            @if (current != null)
+            {
+                if (Model.user.UserId.Equals(current.Id))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link red" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Edit Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        @if (!Model.user.Accepted)
+                        {
+                            <a class="nav-link red" href='@Url.Action("Index","Files")'>Documents</a>
+                        }
+                        else
+                        {
+                            <a class="nav-link red" id="docs-tab" data-toggle="tab" href="#docs" role="tab" aria-controls="docs" aria-selected="false">Documents</a>
+                        }
+
+                    </li>
+                    }
+                }
+
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <h3 class="text-center">This is @Model.user.UserName's profile</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-6 p-5">
+                        <h5>First name: <span style="color:crimson">@Model.user.FirstName</span></h5>
+                        <h5>Last name: <span style="color:crimson">@Model.user.LastName</span></h5>
+
+                    </div>
+                    <div class="col-6 p-5">
+                        <h5>Email: <span style="color:crimson">@Model.user.Email</span></h5>
+                        <h5>Phone: <span style="color:crimson">@Model.user.Phone</span></h5>
+                    </div>
+                </div>
+                <hr />
+                <div class="d-flex justify-content-between">
+                    <h4>Posts:</h4>
+                    @if (current != null)
+                    {
+                        if (Model.user.UserId.Equals(current.Id))
+                        {
+                            <div class="tags">
+                                <button class="tag" data-toggle="modal" data-target="#addPost">
+                                    +
+                                </button>
+                            </div>
+                        }
+                    }
+
+                </div>
+                <div class="modal fade" id="addPost" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Add post</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                @using (Html.BeginForm("AddPost", "Home", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    <div class="form-horizontal">
+                                        <h4>News</h4>
+                                        <hr />
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.News.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.News.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.News.Title, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.News.ShortContent, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.News.ShortContent, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.News.ShortContent, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.News.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.TextAreaFor(model => model.News.Content, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.News.Content, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.News.PictureURL, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.News.PictureURL, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.News.PictureURL, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.News.CategoryId, "CategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control", Name = "News.CategoryId" })
+                                                @Html.ValidationMessageFor(model => model.News.CategoryId, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Create</button>
+                                    </div>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    @foreach (var news in Model.userNews)
+                    {
+                        <div class="col-12">
+                            <div class="row mt-4">
+                                <div class="col-4">
+                                    <img src="@news.PictureURL" style="width:200px; height:200px; object-fit:cover" />
+                                </div>
+                                <div class="col-8">
+                                    <div class="">
+                                        <p>
+                                            Status:
+                                            @if (news.IsActive)
+                                            {
+                                                <span style="color:yellowgreen">Active</span>
+                                            }
+                                            else
+                                            {
+                                                <span style="color:coral">Hold</span>
+                                            }
+
+
+                                        </p>
+                                        <div class="d-flex justify-content-between" style="width:100%">
+                                            <a class="red" href='@Url.Action("NewsDetails", "News")/@news.NewsID'><h3>@news.Title</h3></a>
+
+                                            <div class="tags">
+                                                @if (current != null)
+                                                {
+                                                    if (!news.IsActive && news.UserID.Equals(current.Id))
+                                                    {
+                                                        <button class="tag" data-toggle="modal" data-target="#editPost">
+                                                            Edit
+                                                        </button>
+                                                    }
+                                                    else
+                                               if (current != null)
+                                                    {
+                                                        if (current.Roles.ToArray()[0].Equals("admin"))
+                                                        {
+                                                            <button class="tag" data-toggle="modal" data-target="#editPost">
+                                                                Edit
+                                                            </button>
+                                                        }
+                                                    }
+                                                }
+
+                                            </div>
+                                        </div>
+                                        <p>@news.ShortContent</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                    <div class="modal fade" id="editPost" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Edit post</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    @using (Html.BeginForm("EditPost", "Home", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        <div class="form-horizontal">
+                                            <h4>News</h4>
+                                            <hr />
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.News.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div class="col-md-10">
+                                                    @Html.EditorFor(model => model.News.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.News.Title, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.News.ShortContent, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div class="col-md-10">
+                                                    @Html.EditorFor(model => model.News.ShortContent, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.News.ShortContent, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.News.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div class="col-md-10">
+                                                    @Html.EditorFor(model => model.News.Content, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.News.Content, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.News.PictureURL, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div class="col-md-10">
+                                                    @Html.EditorFor(model => model.News.PictureURL, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.News.PictureURL, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.News.CategoryId, "CategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div class="col-md-10">
+                                                    @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control", Name = "News.CategoryId" })
+                                                    @Html.ValidationMessageFor(model => model.News.CategoryId, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Create</button>
+                                        </div>
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane fade" id="docs" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="text-center">
+                    <h3 style="color:crimson">Congrats!</h3>
+                    <hr class="my-4" />
+                    <h4>
+                        All your documents have been checked and you will be contacted shortly to admit you to the university.
+                    </h4>
+                    <h4 style="color:coral">
+                        Wait, please!
+                    </h4>
+                    <img src="https://png.pngtree.com/png-vector/20190217/ourmid/pngtree-smile-vector-template-design-illustration-png-image_555080.jpg" />
+                </div>
+            </div>
+
+
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <h4>Edit Profile</h4>
+                    <hr />
+                    <div class="mb-5">
+                        @using (Html.BeginForm("AddAvatar", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+                                @Html.ValidationSummary(true)
+                                <input type="hidden" name="user_id" value="@Model.user.UserId" />
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.user.PictureUrl, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        <input type="file" name="ImageFile" required">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Upload" class="btn" style="color:white; background-color:crimson" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <hr />
+                    <div class="d-flex justify-content-between">
+                        <h3>
+                            Mailing:
+                            @if (Model.user.Mailing)
+                            {
+                                <span style="color:yellowgreen">Active</span>
+                            }
+                            else
+                            {
+                                <span style="color:crimson">Not Active</span>
+                            }
+                        </h3>
+                        <div>
+                            @if (Model.user.Mailing)
+                            {
+                                <a href='@Url.Action("DisableMailing","Home")/@Model.user.UserId'><p class="tag my-auto">Disable</p></a>
+
+                            }
+                            else
+                            {
+                                <a href='@Url.Action("ActivateMailing","Home")/@Model.user.UserId'><p class="tag my-auto">Activate</p></a>
+
+                            }
+                        </div>
+                    </div>
+
+                    <hr />
+                    @using (Html.BeginForm("EditProfile", "Home", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.user.UserId)
+                            @Html.HiddenFor(model => model.user.PictureUrl)
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.user.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.user.FirstName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.user.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.user.LastName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.user.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.user.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.user.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.user.UserName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.user.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.user.Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.user.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.user.Phone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.Subjects, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @for (int i = 0; i < Model.user.Subjects.Count(); i++)
+                                    {
+                                        @Html.EditorFor(m => Model.user.Subjects[i].Checked)
+                                        @Html.DisplayFor(m => Model.user.Subjects[i].Name)
+                                        @Html.HiddenFor(m => Model.user.Subjects[i].Name)
+                                        @Html.HiddenFor(m => Model.user.Subjects[i].Id)
+                                        <br>
+                                    }
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Save" class="btn" style="color:white; background-color:crimson" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+</div>

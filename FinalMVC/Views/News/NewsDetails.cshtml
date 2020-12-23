@@ -1,0 +1,184 @@
+﻿@model FinalMVC.Models.NewsDetailsView
+@using FinalMVC.Models
+@{
+    ViewBag.Title = "NewsDetails";
+    var current = (ApplicationUser)Session["currentUser"];
+}
+<div class="top-detail">
+    <div class="container h-100 d-flex align-items-center justify-content-between">
+        <h2>News Details</h2>
+        <div>
+            <p>News > @Model.news.Category.Name > @Model.news.Title</p>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-12">
+            <div class="news-block mb-2">
+                <img class="news-block-img rounded" style="height:500px;object-fit:cover;" src="@Model.news.PictureURL">
+                <div class="news-block-chert mt-3">
+                    <p>
+                        <span class="d-block">
+                            By <b class="red">
+                                @Model.news.User.UserName
+                            </b>
+                        </span>
+
+                    </p>
+                    <hr>
+                    <a class="red hover-black" href="#"><h2>@Model.news.Title</h2></a>
+                    <p class="short-text">
+
+                    </p>
+                    <p class="news-block-contents">
+                        @Model.news.Content
+                    </p>
+                    <div class="footer-news-block d-flex align-items-center justify-content-between">
+                        <a href="#" class="category-link red hover-black">
+                            @Model.news.Category.Name
+                        </a>
+                        <a href="#" class="comment-link red hover-black"><i class="fas fa-comment-alt"></i> @Model.Comments.Count</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <h3>Tags In</h3>
+                <div class="tags">
+                    <a href="#" class="tag">C#</a>
+                    <a href="#" class="tag">Java</a>
+                </div>
+            </div>
+            <hr>
+            <div class="related-news">
+                <h3>Related news</h3>
+                <div class="row">
+                    @foreach (var n in Model.RelatedNews)
+                    {
+                        if (n.IsActive)
+                        {
+                            <div class="col-sm-4">
+
+                                <img class="rounded" src="@n.PictureURL" style="height:200px; object-fit:cover;" />
+                                <a class="red hover-black" href='@Url.Action("NewsDetails", "News", new { id = n.NewsID })'>
+                                    <p>@n.Title</p>
+                                </a>
+                                <hr>
+                            </div>
+                        }
+
+                    }
+                </div>
+            </div>
+            @if (current != null)
+            {
+                <div class="addComment mb-5">
+                    @using (Html.BeginForm("AddComment", "News", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-block">
+                            <h4>Comment</h4>
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <input type="hidden" name="UserId" value="@current.Id" />
+                            <input type="hidden" name="NewsId" value="@Model.news.NewsID" />
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <textarea class="form-input" required="" placeholder="Your text" name="Comment"></textarea>
+                                    </div>
+                                    <div class="tags">
+                                        <button type="submit" class="tag">Add comment</button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning mb-5" role="alert">
+                    <h4 class="alert-heading">Comment</h4>
+                    <p>You need to login or register to add comments.</p>
+                    <hr>
+                    <p class="mb-0">We are always welcome for your opinion!</p>
+                </div>
+            }
+            <div class="d-flex">
+                <h1 class="comments-title">Comments</h1>
+                <h1 class="comments-title">(@Model.Comments.Count)</h1>
+
+            </div>
+            <hr />
+            <div class="comments">
+                @foreach (var comment in Model.Comments)
+                {
+                    <div class="be-comment my-5">
+                        <div class="be-img-comment">
+                            <div href="blog-detail-2.html">
+                                <img src="@Url.Content(comment.User.PictureUrl)"
+                                     class="be-ava-comment">
+                            </div>
+                        </div>
+                        <div class="be-comment-content">
+
+                            <span class="be-comment-name">
+                                <a href='@Url.Action("Profile","Home")/@comment.User.Id'><h3 class="red hover-black">@comment.User.UserName</h3></a>
+                            </span>
+                            <span class="be-comment-time">
+                                <p>@comment.PostedDate.ToString("MMMM") @comment.PostedDate.Day, @comment.PostedDate.Year at @comment.PostedDate.Hour:@comment.PostedDate.Minute</p>
+                            </span>
+                            <div class="tags" style="position:relative;">
+                                <p class="be-comment-text">
+                                    @comment.Message
+                                    @if (current.Id == comment.UserId || User.IsInRole("admin"))
+                                    {
+                                        <button class="tag border" id="editCommentButton" data-toggle="modal" data-id="@comment.CommentId" data-text="@comment.Message" data-target="#commentEdit" style="position:absolute; top:20%;right:7%;">
+                                            <i class="fas fa-pen-square"></i>
+                                        </button>
+                                        <a href="@Url.Action("DeleteComment","News", new { com_id = comment.CommentId })"class="tag border" style="position:absolute; top:20%;right:2%;">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="commentEdit" tabindex="-1" role="dialog" aria-labelledby="commentEditTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="commentEditLongTitle">Edit comment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("EditComment", "News", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <input type="hidden" name="comment_id" id="comment_id">
+                    <textarea class="form-control" name="comment" id="comment"></textarea>
+                </div>
+                <div class="modal-footer tags">
+                    <button type="button" class="tag btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="tag btn btn-primary">Save</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - приложение ASP.NET</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
+    <script src="https://kit.fontawesome.com/7a19382369.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=put_your_api_key_here&callback=myMap"></script>
+    @Styles.Render("~/Content/Site.css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="header-top bg-dark">
+        <nav class="navbar sticky-top">
+            <div class="container justify-content-between">
+                <div class="row w-100 justify-content-between text-light">
+
+                    <div class="col-sm-6 col-md-4 col-lg-3 my-2 d-flex justify-content-center">
+                        <i class="fas fa-phone-alt my-auto mr-2 white"></i>
+                        <h6 class="my-auto white">+7 (777) 777 77 77</h6>
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-lg-3 my-2 d-flex p-2 justify-content-center">
+                        <i class="fas fa-clock my-auto mr-2 white"></i>
+                        <h6 class="my-auto white">8:00 AM - 6:00 PM</h6>
+                    </div>
+
+                    <div class="social-link col-sm-12 col-md-4 col-lg-3 offset-lg-3 d-flex justify-content-between align-items-center">
+                        <a class="navbar-brand" href="https://www.facebook.com/iitukz/">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="navbar-brand" href="https://www.instagram.com/iitu_kz/?hl=ru">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a class="navbar-brand" href="https://vk.com/iitukz">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                        <a class="navbar-brand" href="https://twitter.com/iitukz">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    @*<div class="navbar navbar-light navbar-fixed-top shadow bg-white rounded mb-5">
+            <div class="container">
+                <div class="navbar-header row">
+                    <button type="button" class="menu navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" onclick="this.classList.toggle('opened');this.setAttribute('aria-expanded', this.classList.contains('opened'))" aria-label="Main Menu">
+                        <svg width="50" style="height:100%" viewBox="0 0 100 100">
+                            <path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
+                            <path class="line line2" d="M 20,50 H 80" />
+                            <path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942" />
+                        </svg>
+                    </button>
+                    <a href="@Url.Action("Index", "Home")" title="List View" class="links">
+                        <img src="@Url.Content("~/Content/Images/iitu_logo_header.png")" width="200" height="auto" alt="" loading="lazy">
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse mt-2">
+                    <ul class="nav navbar-nav">
+                        <li class="link nav-item my-auto">@Html.ActionLink("Домашняя страница", "Index", "Home", new { @class = "nav-link" })</li>
+                        <li class="link nav-item my-auto">@Html.ActionLink("Информация", "About", "Home", new { @class = "nav-link" })</li>
+                        <li class="link nav-item my-auto">@Html.ActionLink("Связаться", "Contact", "Home", new { @class = "nav-link" })</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+
+            </div>
+        </div>*@
+    <div class="header-bottom">
+        <div class="hb-inner">
+            <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow bg-white rounded">
+                <div class="container justify-content-between">
+                    <div class="row w-100">
+                        <div class="col-sm-1">
+                            <a href="@Url.Action("Index", "Home")" title="List View" class="links">
+                                <img src="@Url.Content("~/Content/Images/iitu_logo_header.png")" width="200" height="auto" alt="" loading="lazy">
+                            </a>
+                        </div>
+                        <!--
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#publications" aria-controls="publications" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button> -->
+                        <div class="col-sm-8 offset-3 d-flex">
+                            <div class="collapse navbar-collapse">
+                                <ul class="navbar-nav">
+                                    <li class="link nav-item my-auto ml-auto">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
+                                    <li class="link nav-item my-auto">@Html.ActionLink("Admission", "Admission", "Home", null, new { @class = "nav-link" })</li>
+                                    <li class="link nav-item my-auto">@Html.ActionLink("News", "News", "Home", null, new { @class = "nav-link" })</li>
+                                    <li class="link nav-item my-auto">@Html.ActionLink("Innovation", "Innovation", "Home", null, new { @class = "nav-link" })</li>
+                                    @Html.Partial("_LoginPartial")
+                                </ul>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    
+
+    <div id="snowflakeContainer">
+        <span class="snowflake">hi</span>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+
+    </div>
+    <footer class="bg-dark">
+        <nav class="navbar navbar-expand-sm footer white text-light">
+            <div class="container">
+                <div class="row w-100 pt-5">
+
+
+                    <div class="col-xl-5 ">
+                        <div class="col-sm-12 text-left">
+                            <h3 class="red">INTERNATIONAL</h3>
+                            <h3 class="red">UNIVERSITY</h3>
+
+                            <p>Expound the actual teachings of the great explorer of the truth master human happiness one rejects dislikes avoids pleasure</p>
+
+                        </div>
+
+                        <div class="col-sm-6 social-link d-flex justify-content-between">
+                            <a class="navbar-brand" href="https://www.facebook.com/iitukz/">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a class="navbar-brand" href="https://www.instagram.com/iitu_kz/?hl=ru">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a class="navbar-brand" href="https://vk.com/iitukz">
+                                <i class="fab fa-vk"></i>
+                            </a>
+                            <a class="navbar-brand" href="https://twitter.com/iitukz">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-2 mb-5 ">
+                        <h4>Important Links</h4>
+                        <nav>
+                            <li class="nav-link"><a href="" class="white-link"><i class="fas fa-angle-right mr-2"></i>Home</a></li>
+                            <li class="nav-link"><a href="" class="white-link"><i class="fas fa-angle-right mr-2"></i>Specialties</a></li>
+                            <li class="nav-link"><a href="" class="white-link"><i class="fas fa-angle-right mr-2"></i>Dates</a></li>
+                            <li class="nav-link"><a href="" class="white-link"><i class="fas fa-angle-right mr-2"></i>Innovation</a></li>
+                        </nav>
+                    </div>
+
+                    <div class="col-xl-5">
+                        <div id="map" class="w-100" style="height:70%"></div>
+                        <div class="row col-sm-12 mt-4 justify-content-between">
+                            <div class="col-sm-6 d-flex justify-content-center my-2">
+                                <div class="row">
+                                    <i class="fas fa-phone-alt my-auto mr-2"></i>
+                                    <div class="ml-3">
+                                        <div class="row">
+                                            <h6 class="my-auto">+7 (777) 777 77 77</h6>
+                                        </div>
+                                        <div class="row">
+                                            <h6 class="my-auto">+7 (777) 666 66 66</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 d-flex justify-content-center my-2">
+                                <div class="row">
+                                    <i class="fas fa-map-marker-alt my-auto mr-2"></i>
+                                    <div class="ml-3">
+                                        <div class="row">
+                                            <h6 class="my-auto">Almaty, Kazakhstan</h6>
+                                        </div>
+                                        <div class="row">
+                                            <h6 class="my-auto">Manas St 34/1</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+
+    </footer>
+
+    <script>
+        function initMap() {
+            var uluru = { lat: 43.2349457, lng: 76.909527 };
+            var map = new google.maps.Map(
+                document.getElementById('map'), { zoom: 10, center: uluru });
+            var marker = new google.maps.Marker({ position: uluru, map: map });
+        };
+
+        $(window).on('scroll', function () {
+            console.log("hello");
+            var scroll = $(window).scrollTop(),
+                hbHeight = $('.header-top').innerHeight(),
+                headerBottom = $('.header-bottom');
+
+            if (scroll >= hbHeight) {
+                headerBottom.addClass("sticky-header");
+            } else {
+                headerBottom.removeClass("sticky-header");
+            }
+        });
+        $(window).on('scroll', function () {
+            var scroll = $(window).scrollTop(),
+                hbHeight = $('.header-top').innerHeight(),
+                mobileMenu = $('.mobile-menu');
+
+            if (scroll >= hbHeight) {
+                mobileMenu.addClass("sticky-header");
+            } else {
+                mobileMenu.removeClass("sticky-header");
+            }
+        });
+        $(document).on("click", "#editCommentButton", function () {
+            var commentId = $(this).data('id');
+            var comment = $(this).data('text');
+            console.log(commentId);
+            $("#comment").val(comment);
+            $("#comment_id").val(commentId);
+        });
+
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKRJyaWMT-jvx36xRhFvMB_RaBl7uyIJQ&callback=initMap">
+    </script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/snowfall.js")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

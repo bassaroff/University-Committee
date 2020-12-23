@@ -1,0 +1,215 @@
+﻿@model IEnumerable<FinalMVC.Models.News>
+@{
+    ViewBag.Title = "News";
+}
+
+<div class="container">
+    <div class="categories row justify-content-around align-items-center" style="color: white;">
+        <p class="category">Politics</p>
+        <p class="category">Society</p>
+        <p class="category">Sports</p>
+        <p class="category">Technology</p>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-lg-8">
+            <div href="news" class="top-news" style="height: 600px;">
+                <img class="img" src="https://cdn.cnn.com/cnnnext/dam/assets/201017212456-05-donald-trump-1017-wisconsin-exlarge-169.jpg">
+                <div class="overlay"></div>
+                <div class="text">
+                    <p class="politics">Politics</p>
+                    <a class="white" href="news-details.html">
+                        <h2 class="title">This is Biden's shortest path to the White House</h2>
+                    </a>
+                    <div class="post-details">
+                        <p><i class="fas fa-user-alt"></i> IITU news</p>
+                        <p><i class="fas fa-clock mr-1"></i>19.10.20</p>
+                        <p><i class="fas fa-heart mr-1"></i>178</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-4">
+            <div class="w-100">
+                <div class="top-news" style="height: 350px;">
+                    <img class="img" src="https://cdn.cnn.com/cnnnext/dam/assets/201019124711-94-year-old-votes-300-miles-restricted-exlarge-169.jpg">
+                    <div class="overlay"></div>
+                    <div class="text-2">
+                        <p class="society">Society</p>
+                        <a class="white" href="news-details.html">
+                            <h2 class="title">This 94-year-old traveled more than 300 miles each way just so she could vote</h2>
+                        </a>
+                        <div class="post-details">
+                            <p><i class="fas fa-user-alt"></i> IITU news</p>
+                            <p><i class="fas fa-clock mr-1"></i>18.10.20</p>
+                            <p><i class="fas fa-heart mr-1"></i>152</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100">
+                <div class="top-news" style="height: 230px;">
+                    <img class="img" src="https://cdn.cnn.com/cnnnext/dam/assets/201019122255-01-mlb-tampa-bay-rays-1017-large-169.jpg">
+                    <div class="overlay"></div>
+                    <div class="overlay-3"></div>
+                    <div class="text-3">
+                        <p class="sports">Sports</p>
+                        <a class="white" href="news-details.html">
+                            <h2 class="title">'Best player on earth' ready to sting Dodgers in World Series</h2>
+                        </a>
+                        <div class="post-details">
+                            <p><i class="fas fa-user-alt"></i> IITU news</p>
+                            <p><i class="fas fa-clock mr-1"></i>17.10.20</p>
+                            <p><i class="fas fa-heart mr-1"></i>114</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container my-4">
+    <div class="snews row mb-2">
+        <div class="col-sm-12 col-lg-9">
+            <div class="row">
+                <div class="col-sm-12 col-lg-6" id="dynamic-row">
+                    @{int index = 1; }
+                    @foreach (var news in Model)
+                    {
+                        if (index % 2 != 0 && news.IsActive)
+                        {
+                        <div class="news-block mb-3 shadow bg-white rounded">
+                            <img class="news-block-img" src="@news.PictureURL" alt="No image here">
+                            <div class="news-block-content">
+                                <p>
+                                    <span>By <a href='@Url.Action("Profile","Home")/@news.UserID'>@news.User.UserName</a></span>
+                                    @news.PostedDate.ToString("MMMM") @news.PostedDate.Day, @news.PostedDate.Year
+                                </p>
+                                <a class="red hover-black" href='@Url.Action("NewsDetails", "News")/@news.NewsID'><h2>@news.Title</h2></a>
+                                <p class="short-text">
+                                    @news.ShortContent
+                                </p>
+                                <hr>
+                                <div class="footer-news-block d-flex align-items-center justify-content-between">
+                                    <a href="news-details.html" class="category-link red hover-black">@news.Category.Name</a>
+                                    <a href="news-details.html" class="comment-link red hover-black"><i class="fas fa-comment-alt"></i> 14</a>
+                                </div>
+
+                            </div>
+                        </div>
+                        }
+                        index++;
+                    }
+                </div>
+
+                <div class="col-sm-12 col-lg-6" id="dynamic-row1">
+                    @{index = 1; }
+                    @foreach (var news in Model)
+                    {
+                        if (index % 2 == 0 && news.IsActive)
+                        {
+                            <div class="news-block mb-3 shadow bg-white rounded">
+                                <img class="news-block-img" src="@news.PictureURL" alt="No image here">
+                                <div class="news-block-content">
+                                    <p>
+                                        <span>By <a href='@Url.Action("Profile","Home")/@news.UserID'>@news.User.UserName</a></span>
+                                        @news.PostedDate.ToString("MMMM") @news.PostedDate.Day, @news.PostedDate.Year
+                                    </p>
+                                    <a class="red hover-black" href='@Url.Action("NewsDetails", "News")/@news.NewsID'><h2 id="news-title@index">@news.Title</h2></a>
+                                    <p class="short-text">
+                                        @news.ShortContent
+                                    </p>
+                                    <hr>
+                                    <div class="footer-news-block d-flex align-items-center justify-content-between">
+                                        <a href="news-details.html" class="category-link red hover-black">@news.Category.Name</a>
+                                        <a href="news-details.html" class="comment-link red hover-black"><i class="fas fa-comment-alt"></i> 14</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                        index++;
+                    }
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center my-3">
+                <ul class="page-numbers">
+                    <li><a class="prev page-numbers hover-red" href="#"><b>Previous</b></a></li>
+                    <li class="current"><a class="page-numbers" href="#"><b>1</b></a></li>
+                    <li><a class="page-numbers hover-red" href="#"><b>2</b></a></li>
+                    <li><a class="next page-numbers hover-red" href="#"><b>Next</b></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-3 mb-3">
+            <form action="" class="search-form">
+                <input type="search" class="search-input" id="search-input">
+                <i class="fa fa-search"></i>
+            </form>
+            <hr>
+            <div>
+                <h3>Popular tags</h3>
+                <div class="tags">
+                    <a href="#" class="tag">C#</a>
+                    <a href="#" class="tag">Java</a>
+                    <a href="#" class="tag">CSS</a>
+                    <a href="#" class="tag">PHP</a>
+                    <a href="#" class="tag">Java EE</a>
+                    <a href="#" class="tag">C++</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#search-input").on("keyup", function () {
+        var searchEnter = $(this).val();
+        $.ajax({
+            type: "post",
+            url: "/Home/GetSearchingNews?SearchBy=" + searchEnter,
+            contentType: "html",
+            success: function (result) {
+                var tableRow = '';
+                console.log(result);
+                    $('#dynamic-row').html('');
+                    $.each(result, function (index, value) {
+
+                        if (index % 2 == 0 && value.IsActive) {
+                            tableRow = `<div class="news-block
+                            mb-3 shadow bg-white rounded"><img
+                            class="news-block-img" src="`+ value.PictureURL + `"><div
+                            class="news-block-content"><p><span class="d-block">By <a href='@Url.Action("Profile", "Home")/`+ value.UserId+`'>` + value.UserName + `</span></a>` + GetMonthName(value.PostedMonth) + ' ' + value.PostedDay + ", " + value.PostedYear + `</p > <a
+                            class="red hover-black" href='@Url.Action("NewsDetails", "News")/`+value.NewsID+`'><h2>` + value.Title +`</h2></a><p
+                            class="short-text">`+value.ShortContent+`</p><hr><div
+                            class="footer-news-block d-flex align-items-center justify-content-between"><a
+                            href='' class="category-link red hover-black">`+ value.Category+`</a><a
+                            href="" class="comment-link red hover-black"><i
+                            class="fas fa-comment-alt"></i> 14</a></div></div></div>`;
+                            $('#dynamic-row').append(tableRow)
+                        }
+                    })
+                    $('#dynamic-row1').html('');
+                    $.each(result, function(index, value){
+                        if (index % 2 != 0 && value.IsActive){
+                            tableRow = `<div class="news-block
+                            mb-3 shadow bg-white rounded"><img
+                            class="news-block-img" src="`+ value.PictureURL+`"><div
+                            class="news-block-content"><p><span class="d-block">By <a href='@Url.Action("Profile", "Home")/`+ value.UserId+`'>` + value.UserName + `</span></a>` + GetMonthName(value.PostedMonth) + ' ' + value.PostedDay + ", " + value.PostedYear + `</p ><a
+                            class="red hover-black" href='@Url.Action("NewsDetails", "News")/`+value.NewsID+`'><h2>`+ value.Title+`</h2></a><p
+                            class="short-text">`+ value.ShortContent+`</p><hr><div
+                            class="footer-news-block d-flex align-items-center justify-content-between"><a
+                            href="{{ route('news-details', $post->id) }}" class="category-link red hover-black">Design</a><a
+                            href="{{ route('news-details', $post->id) }}" class="comment-link red hover-black"><i
+                            class="fas fa-comment-alt"></i> 14</a></div></div></div>`;
+                            $('#dynamic-row1').append(tableRow)
+                        }
+                    })
+            }
+        })
+    });
+    function GetMonthName(monthNumber) {
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        return months[monthNumber - 1];
+    }
+</script>
